@@ -1,15 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Global.Dados;
+using Global.Dados.Entidades;
 using Global.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace Global.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly DataContext _context;
+
+        public HomeController(DataContext context)
+        {
+            _context = context;
+        }
+
+
+
+        public async Task<IActionResult> Servicos([Bind("Id,Nome,Email,Mensagem")] Contacto contacto)
+        {
+            ViewData["Message"] = "Os seus serviços.";
+
+            if (ModelState.IsValid)
+            {
+                _context.Add(contacto);
+                await _context.SaveChangesAsync();
+                
+            }
+            return View(await _context.Contactos.ToListAsync());
+        }
+
+
+
+
+
         public IActionResult Index()
         {
             return View();
@@ -22,12 +48,7 @@ namespace Global.Controllers
             return View();
         }
 
-        public IActionResult Servicos()
-        {
-            ViewData["Message"] = "Os seus serviços.";
 
-            return View();
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
@@ -36,3 +57,4 @@ namespace Global.Controllers
         }
     }
 }
+
