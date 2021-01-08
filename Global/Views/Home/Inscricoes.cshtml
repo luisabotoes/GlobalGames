@@ -1,0 +1,62 @@
+﻿@model Global.Dados.Entidades.Inscricao
+
+@{
+    ViewData["Title"] = "Inscrições";
+}
+
+
+<div class=" dark inscricoes">
+    <h3>Inscrições para o próximo grande jogo de realidade virtual!</h3>
+    <form asp-controller="Home" asp-action="Inscricoes">
+        <div>
+            <label>Nome</label><br>
+            <input class="nome" asp-for="Nome" type="text" />
+        </div>
+        <div>
+            <label>Apelido</label><br>
+            <input class="apelido" asp-for="Apelido" type="text" />
+        </div>
+        <div>
+            <label>Morada</label><br>
+            <input class="morada" asp-for="Morada" type="text" />
+        </div>
+        <div>
+            <label>Localidade</label><br>
+            <input class="localidade" asp-for="Localidade" type="text" />
+        </div>
+        <div>
+            <label>Cartão de Cidadão</label><br>
+            <input class="cc" asp-for="CartaoCidadao" type="text" />
+        </div>
+        <div>
+            <label>Data de Nascimento</label><br>
+            <input class=" dn" asp-for="DataNascimento" type="date" placeholder="dd-mm-aaaa" />
+        </div>
+
+        <button class="button_1 btn-insc" type="submit">Enviar</button>
+        <div class="aqui">
+            @ViewData["Mensagem"] <br />
+
+        </div>
+    </form>
+
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        document.querySelector('#inscricoes').className = 'selecionado';
+
+        const btn = document.querySelector('.btn-insc');
+        const aqui = document.querySelector('.aqui');
+        aqui.style.display = 'none';
+
+        loadEventListeners();
+        function loadEventListeners() {
+            btn.addEventListener('click', dataSend);
+        }
+        function dataSend(e) {
+            alert('Inscrição bem sucedida');
+        }
+
+    </script>
+}

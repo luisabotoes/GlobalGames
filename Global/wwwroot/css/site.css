@@ -176,8 +176,27 @@ aside#sidebar .orcamento input, aside#sidebar .orcamento textarea {
 }
 
 
-/*Footer*/
+/* Página Inscrições*/
+.btn-insc {
+    margin-top:10px;
+}
+.inscricoes {
+    width: 80%;
+    margin: auto;
+    background: #e6e6e6;
+    color: #35424a;
+    text-align: center;
+}
+.inscricoes input{
+   width: 80%; 
+   margin-bottom: 20px;
+}
+.inscricoes label{
+    text-align: left;
+}
 
+
+/*Footer*/
 footer {
     padding: 20px;
     margin-top: 20px;
@@ -225,3 +244,4 @@ footer {
         margin-bottom: 5px;
     }
 }
+
