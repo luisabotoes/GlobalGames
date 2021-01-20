@@ -10,6 +10,8 @@ namespace Global.Dados.Entidades
 
         public string Apelido { get; set; }
 
+        public string ImageUrl { get; set; }
+
         public string Morada { get; set; }
 
         public string Localidade { get; set; }

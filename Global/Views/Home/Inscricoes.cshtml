@@ -1,4 +1,4 @@
-﻿@model Global.Dados.Entidades.Inscricao
+﻿@model Global.Models.InscricaoViewModel
 
 @{
     ViewData["Title"] = "Inscrições";
@@ -7,7 +7,8 @@
 
 <div class=" dark inscricoes">
     <h3>Inscrições para o próximo grande jogo de realidade virtual!</h3>
-    <form asp-controller="Home" asp-action="Inscricoes">
+
+    <form asp-controller="Home" asp-action="Inscricoes" enctype="multipart/form-data">
         <div>
             <label>Nome</label><br>
             <input class="nome" asp-for="Nome" type="text" />
@@ -15,6 +16,10 @@
         <div>
             <label>Apelido</label><br>
             <input class="apelido" asp-for="Apelido" type="text" />
+        </div>
+        <div class="form-group">
+            <label>Imagem</label><br>
+            <input class="imagem" asp-for="ImageFile"  type="file" />
         </div>
         <div>
             <label>Morada</label><br>
@@ -55,7 +60,7 @@
             btn.addEventListener('click', dataSend);
         }
         function dataSend(e) {
-            alert('Inscrição bem sucedida');
+            aqui.style.display = 'block';
         }
 
     </script>

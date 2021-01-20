@@ -48,6 +48,8 @@ namespace Global.Migrations
 
                     b.Property<DateTime>("DataNascimento");
 
+                    b.Property<string>("ImageUrl");
+
                     b.Property<string>("Localidade");
 
                     b.Property<string>("Morada");

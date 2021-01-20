@@ -1,10 +1,13 @@
 ﻿using Global.Dados;
 using Global.Dados.Entidades;
 using Global.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Global.Controllers
@@ -27,7 +30,6 @@ namespace Global.Controllers
         public IActionResult Sobre()
         {
             ViewData["Message"] = "A descrição da sua empresa.";
-
             return View();
         }
 
@@ -59,23 +61,58 @@ namespace Global.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Inscricoes([Bind("Id,Nome,Apelido,Morada,Localidade,CartaoCidadao,DataNascimento")] Inscricao inscricao)
+        public async Task<IActionResult> Inscricoes([Bind("Id,Nome,Apelido,Morada,ImageFile,Localidade,CartaoCidadao,DataNascimento")] InscricaoViewModel view)
         {       
             if (ModelState.IsValid)
             {
+                var path = string.Empty;
+
+                if(view.ImageFile !=null && view.ImageFile.Length > 0)
+                {
+                    path = Path.Combine(
+                        Directory.GetCurrentDirectory(),
+                        "wwwroot\\images\\ImgInscricoes",
+                        view.ImageFile.FileName);
+
+                    using(var stream = new FileStream(path, FileMode.Create))
+                    {
+                        await view.ImageFile.CopyToAsync(stream);
+                    }
+                    path = $"~/images/Inscricoes/{view.ImageFile.FileName}";
+                }
+                var inscricao = this.ToInscricao(view, path);
+
                 _context.Add(inscricao);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Inscricoes) );
+                return RedirectToAction(nameof(Inscricoes));
+
             }
-            return View(await _context.Inscricoes.ToListAsync());
+            return View(view);
+
         }
 
+        private Inscricao ToInscricao(InscricaoViewModel view, string path)
+        {
+            return new Inscricao
+            {
+                Id = view.Id,
+                ImageUrl = path,
+                Nome = view.Nome,
+                Apelido = view.Apelido,
+                Morada = view.Morada,
+                Localidade = view.Localidade,
+                CartaoCidadao = view.CartaoCidadao,
+                DataNascimento = view.DataNascimento
+
+            };
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
     }
 }
 
