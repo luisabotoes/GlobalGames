@@ -1,5 +1,6 @@
 ﻿using Global.Dados;
 using Global.Dados.Entidades;
+using Global.Helpers;
 using Global.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,10 +16,12 @@ namespace Global.Controllers
     public class HomeController : Controller
     {
         private readonly DataContext _context;
+        private readonly IUserHelper userHelper;
 
-        public HomeController(DataContext context)
+        public HomeController(DataContext context, IUserHelper userHelper)
         {
             _context = context;
+            this.userHelper = userHelper;
         }
 
 
@@ -65,6 +68,7 @@ namespace Global.Controllers
         {       
             if (ModelState.IsValid)
             {
+
                 var path = string.Empty;
 
                 if(view.ImageFile !=null && view.ImageFile.Length > 0)
@@ -82,9 +86,14 @@ namespace Global.Controllers
                 }
                 var inscricao = this.ToInscricao(view, path);
 
+               
                 _context.Add(inscricao);
+
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Inscricoes));
+
+
 
             }
             return View(view);

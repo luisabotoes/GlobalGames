@@ -4,14 +4,16 @@ using Global.Dados;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Global.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20210121100743_AddUsers")]
+    partial class AddUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,11 +58,11 @@ namespace Global.Migrations
 
                     b.Property<string>("Nome");
 
-                    b.Property<string>("UserId");
+                    b.Property<string>("userId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("userId");
 
                     b.ToTable("Inscricoes");
                 });
@@ -232,9 +234,9 @@ namespace Global.Migrations
 
             modelBuilder.Entity("Global.Dados.Entidades.Inscricao", b =>
                 {
-                    b.HasOne("Global.Dados.Entidades.User", "User")
+                    b.HasOne("Global.Dados.Entidades.User", "user")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("userId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

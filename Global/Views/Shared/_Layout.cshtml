@@ -6,13 +6,16 @@
     <title>Global Games | @ViewData["Title"]</title>
 
     <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
+
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+
     </environment>
 </head>
 <body>
@@ -27,6 +30,17 @@
                     <li id="sobre"><a asp-controller="Home" asp-action="Sobre">Sobre</a></li>
                     <li id="servicos"><a asp-controller="Home" asp-action="Create">Serviços</a></li>
                     <li id="inscricoes"><a asp-controller="Home" asp-action="Inscricoes">Inscrições</a></li>
+                    <li id="inscricoes">
+                        @if (this.User.Identity.IsAuthenticated)
+                        {
+                            <li><a asp-area="" asp-controller="Account" asp-action="Index">@this.User.Identity.Name</a></li>
+                            <li><a asp-area="" asp-controller="Account" asp-action="Logout">Logout</a></li> }
+                        else
+                        {
+                             <li><a asp-area="" asp-controller="Account" asp-action="Login">Login</a></li>
+                        }
+       
+
                 </ul>
             </nav>
         </div>

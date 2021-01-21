@@ -19,5 +19,8 @@ namespace Global.Dados.Entidades
         public string CartaoCidadao { get; set; }
 
         public DateTime DataNascimento { get; set; }
+
+        public User User { get; set; }
+
     }
 }
