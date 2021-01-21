@@ -22,5 +22,17 @@ namespace Global.Dados.Entidades
 
         public User User { get; set; }
 
+        public string ImageFullPath
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(this.ImageUrl))
+                {
+                    return null;
+                }
+                return $"https://localhost:44398/Inscricoes/{this.ImageUrl.Substring(1)}";
+            }
+        }
+
     }
 }

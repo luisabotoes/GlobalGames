@@ -13,6 +13,7 @@ namespace Global.Dados
         private readonly DataContext context;
         private readonly IUserHelper userHelper;
         private readonly Random random;
+      
 
         public SeedDb(DataContext context,IUserHelper userHelper )
         {
@@ -48,23 +49,26 @@ namespace Global.Dados
 
             if (!this.context.Inscricoes.Any())
             {
-                this.AddInscricao("Maria Papoila", user);
-                this.AddInscricao("João Ratão", user);
-                this.AddInscricao("Príncipe Encantado", user);
-                this.AddInscricao("Gata Borralheira", user);
-                this.AddInscricao("Fada Sininho", user);
+                this.AddInscricao("Maria Papoila", "das Couves", "Tóquio", user);
+                this.AddInscricao("João Ratão", "Silva", "Benfica", user);
+                this.AddInscricao("Príncipe Encantado","Real", "Sintra", user);
+                this.AddInscricao("Gata Borralheira", "Sousa", "Aldeia Encantada", user);
+                this.AddInscricao("Fada Sininho", "Santos", "Porto", user);
                 await this.context.SaveChangesAsync();
             }
         }
 
-        private void AddInscricao(string nome, User user)
+
+        private void AddInscricao(string nome, string apelido, string localidade, User user)
         {
             this.context.Inscricoes.Add(new Inscricao
             {
                 Nome = nome,
-                User = user
+                Apelido = apelido,
+                Localidade = localidade
 
             });
         }
+
     }
 }

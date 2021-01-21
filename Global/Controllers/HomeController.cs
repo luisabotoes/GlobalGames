@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.IO;
@@ -71,28 +72,29 @@ namespace Global.Controllers
 
                 var path = string.Empty;
 
-                if(view.ImageFile !=null && view.ImageFile.Length > 0)
+                if (view.ImageFile != null && view.ImageFile.Length > 0)
                 {
+
                     path = Path.Combine(
                         Directory.GetCurrentDirectory(),
                         "wwwroot\\images\\ImgInscricoes",
                         view.ImageFile.FileName);
 
-                    using(var stream = new FileStream(path, FileMode.Create))
+                    using (var stream = new FileStream(path, FileMode.Create))
                     {
                         await view.ImageFile.CopyToAsync(stream);
                     }
-                    path = $"~/images/Inscricoes/{view.ImageFile.FileName}";
+
+                    path = $"~/images/imginscricoes/{view.ImageFile.FileName}";
                 }
+
                 var inscricao = this.ToInscricao(view, path);
 
                
                 _context.Add(inscricao);
 
-
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Inscricoes));
-
 
 
             }
